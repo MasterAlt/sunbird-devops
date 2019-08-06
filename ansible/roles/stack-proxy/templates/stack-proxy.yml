@@ -21,6 +21,8 @@ services:
 {% if proto=='https' %}
       - site.key
       - site.crt
+      - sitemerge.key
+      - sitemerge.crt
 {% endif %}
       - prom_admin_creds
     configs:
@@ -39,6 +41,10 @@ secrets:
   site.key:
     external: true
   site.crt:
+    external: true
+  sitemerge.key:
+    external: true
+  sitemerge.crt:
     external: true
 {% endif %}
   prom_admin_creds:
