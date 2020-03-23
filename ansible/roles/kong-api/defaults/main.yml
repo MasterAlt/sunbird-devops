@@ -1952,7 +1952,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ createData_ACL | default(['dataUpdate']) }}"
+      config.whitelist: "['dataUpdate']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
