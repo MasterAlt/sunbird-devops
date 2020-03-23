@@ -4301,3 +4301,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# verifyOtp API DESCRIPTION: used to verify otp
+  - name: verifyOtp
+    request_path: "{{ otp_service_prefix }}/v1/verify"
+    upstream_url: "{{ learning_service_url }}/v1/otp/verify"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['userAccess']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
