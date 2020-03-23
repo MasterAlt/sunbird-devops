@@ -89,20 +89,6 @@ premium_consumer_rate_limits:
     config.policy: local
 
 kong_apis:
-  - name: readForm
-    request_path: "{{ data_service_prefix }}/v1/form/read"
-    upstream_url: "{{ player_service_url }}/plugin/v1/form/read"
-    strip_request_path: true
-    plugins:
-    - name: cors
-    - "{{ statsd_pulgin }}"
-    - name: rate-limiting
-      config.policy: local
-      config.hour: "{{ medium_rate_limit_per_hour }}"
-      config.limit_by: ip
-    - name: request-size-limiting
-      config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
   - name: masterLocationCreate
     request_path: "{{ data_service_prefix }}/v1/location/create"
     upstream_url: "{{ learning_service_url }}/v1/location/create"
