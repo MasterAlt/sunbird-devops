@@ -4093,3 +4093,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# addSystemSettings API DESCRIPTION: used to create system settings
+  - name: addSystemSettings
+    request_path: "{{ data_service_prefix }}/v1/system/settings/set"
+    upstream_url: "{{ learning_service_url }}/v1/system/settings/set"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['appCreate']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
