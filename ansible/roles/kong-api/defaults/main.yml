@@ -60,8 +60,6 @@ cert_registry_service_prefix: /certreg
 desktop_app_prefix: /desktop
 license_api_prefix: /license
 
-# Service URLs
-knowledge_mw_service_url: "http://knowledge-mw-service:5000"
     strip_request_path: true
     plugins:
     - name: jwt
