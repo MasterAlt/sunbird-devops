@@ -2699,3 +2699,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# readContentState API DESCRIPTION: To fetch the learner progress for a course batch
+  - name: readContentState
+    request_path: "{{ course_service_prefix }}/v1/content/state/read"
+    upstream_url: "{{ lms_service_url }}/v1/content/state/read"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist: "['courseAccess']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
