@@ -3059,3 +3059,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+# registerMobileAppTeacherAid API DESCRIPTION: used to register mobile APP for teacher aid
+  - name: registerMobileAppTeacherAid
+    request_path: "{{ api_manager_perfix }}/v1/consumer/mobile_app_teacheraid/credential/register"
+    upstream_url: "{{ am_util_url }}/v1/consumer/mobile_app_teacheraid/credential/register"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['mobileTeacherAidSuperAdmin']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
