@@ -2490,7 +2490,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ createFramework_ACL | default(['domainUpdate']) }}"
+      config.whitelist: "['domainUpdate']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ x_medium_rate_limit_per_hour }}"
