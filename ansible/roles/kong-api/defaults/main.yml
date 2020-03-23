@@ -86,8 +86,6 @@ premium_consumer_rate_limits:
   - api: readContent
     config.hour: "{{ premium_consumer_large_rate_limit_per_hour }}"
     config.limit_by: credential
-    config.policy: local
-
     strip_request_path: true
     plugins:
     - name: jwt
