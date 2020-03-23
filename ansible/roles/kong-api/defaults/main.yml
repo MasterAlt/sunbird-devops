@@ -89,23 +89,6 @@ premium_consumer_rate_limits:
     config.policy: local
 
 kong_apis:
-  - name: sendNotification
-    request_path: "{{ data_service_prefix }}/v1/notification/send"
-    upstream_url: "{{ learning_service_url }}/v1/notification/send"
-    strip_request_path: true
-    plugins:
-    - name: jwt
-    - name: cors
-    - "{{ statsd_pulgin }}"
-    - name: acl
-      config.whitelist: "['dataUpdate']"
-    - name: rate-limiting
-      config.policy: local
-      config.hour: "{{ medium_rate_limit_per_hour }}"
-      config.limit_by: credential
-    - name: request-size-limiting
-      config.allowed_payload_size: "{{ small_request_size_limit }}"
-
   - name: metricsSearchData
     request_path: "{{ data_service_prefix }}/v1/object/metrics"
     upstream_url: "{{ learning_service_url }}/v1/object/metrics"
