@@ -3023,3 +3023,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+# registerMobileApp API DESCRIPTION: used to register mobile app
+  - name: registerMobileApp
+    request_path: "{{ api_manager_perfix }}/v1/consumer/mobile_app/credential/register"
+    upstream_url: "{{ am_util_url }}/v1/consumer/mobile_app/credential/register"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['mobileSuperAdmin']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
