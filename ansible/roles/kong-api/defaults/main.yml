@@ -1,13 +1,90 @@
-    strip_request_path: true
-    plugins:
-    - name: jwt
-    - name: cors
-    - "{{ statsd_pulgin }}"
-    - name: acl
-      config.whitelist: "['publicUser']"
-    - name: rate-limiting
-      config.policy: local
-      config.hour: "{{ medium_rate_limit_per_hour }}"
-      config.limit_by: credential
-    - name: request-size-limiting
-      config.allowed_payload_size: "{{ small_request_size_limit }}"
+---
+kong_admin_api_url: "http://{{kong_host}}:8001"
+
+# Default statsd_metrics
+statsd_metrics: ["request_count", "status_count", "latency", "upstream_latency", "request_size", "response_size"]
+statsd_host: statsd-service
+statsd_port: 9125
+
+statsd_pulgin:
+  name: statsd
+  config.metrics: "{{ statsd_metrics }}"
+  config.host: "{{ statsd_host }}"
+  config.port: "{{ statsd_port }}"
+
+# Default Rate limits
+small_rate_limit_per_hour: 100
+medium_rate_limit_per_hour: 5000
+x_medium_rate_limit_per_hour: 5000
+large_rate_limit_per_hour: 10000
+x2_large_rate_limit_per_hour: 15000
+x_large_rate_limit_per_hour: 30000
+
+premium_consumer_small_rate_limit_per_hour: 1000
+premium_consumer_medium_rate_limit_per_hour: 10000
+premium_consumer_large_rate_limit_per_hour: 100000
+
+# Default max request size in MB
+small_request_size_limit: 1
+medium_request_size_limit: 10
+large_request_size_limit: 100
+
+# Default service prefixes
+private_content_prefix: /private/content
+content_prefix: /content
+course_service_prefix: /course
+itemset_prefix: /itemset
+user_service_prefix: /user
+data_service_prefix: /data
+notes_service_prefix: /notes
+org_service_prefix: /org
+echo_service_prefix: /echo
+composite_service_prefix: /composite
+api_manager_perfix: /api-manager
+meta_service_prefix: /meta
+dashboard_service_prefix: /dashboard
+announcement_service_prefix: /announcement
+dialcode_service_prefix: /dialcode
+channel_service_prefix: /channel
+framework_service_prefix: /framework
+badge_service_prefix: /badging
+plugin_service_prefix: /plugins
+config_service_prefix: /config
+textbook_service_prefix: /textbook
+lock_service_prefix: /lock
+otp_service_prefix: /otp
+sso_service_prefix: /sso
+cert_service_prefix: /cert
+cert_registry_service_prefix: /certreg
+desktop_app_prefix: /desktop
+license_api_prefix: /license
+
+# Service URLs
+knowledge_mw_service_url: "http://knowledge-mw-service:5000"
+learning_service_url: "http://learner-service:9000"
+vm_learning_service_url: "http://{{learningservice_ip}}:8080/learning-service"
+telemetry_service_url: "http://telemetry-service:9001"
+player_service_url: "http://player:3000"
+echo_service_url: "http://echo:9595"
+am_util_url: "http://adminutil:4000"
+config_service_url: "http://config-service:8080"
+lms_service_url: "http://lms-service:9000"
+cert_service_url: "http://cert-service:9000"
+cert_registry_service_url: "http://cert-registry-service:9000"
+content_service_url: "http://content-service:9000"
+
+premium_consumer_rate_limits:
+  - api: createContent
+    config.hour: "{{ premium_consumer_small_rate_limit_per_hour }}"
+    config.limit_by: credential
+    config.policy: local
+  - api: updateContent
+    config.hour: "{{ premium_consumer_medium_rate_limit_per_hour }}"
+    config.limit_by: credential
+    config.policy: local
+  - api: readContent
+    config.hour: "{{ premium_consumer_large_rate_limit_per_hour }}"
+    config.limit_by: credential
+    config.policy: local
+
+kong_apis:
