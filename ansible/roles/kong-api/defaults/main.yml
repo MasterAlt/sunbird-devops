@@ -34,8 +34,6 @@ large_request_size_limit: 100
 private_content_prefix: /private/content
 content_prefix: /content
 course_service_prefix: /course
-itemset_prefix: /itemset
-user_service_prefix: /user
     strip_request_path: true
     plugins:
     - name: jwt
