@@ -12,8 +12,6 @@ statsd_pulgin:
   config.metrics: "{{ statsd_metrics }}"
   config.host: "{{ statsd_host }}"
   config.port: "{{ statsd_port }}"
-
-# Default Rate limits
     strip_request_path: true
     plugins:
     - name: jwt
