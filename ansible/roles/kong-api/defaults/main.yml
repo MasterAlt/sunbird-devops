@@ -89,20 +89,6 @@ premium_consumer_rate_limits:
     config.policy: local
 
 kong_apis:
-  - name: readContent
-    request_path: "{{ content_prefix }}/v1/read"
-    upstream_url: "{{ knowledge_mw_service_url }}/v1/content/read"
-    strip_request_path: true
-    plugins:
-    - name: cors
-    - "{{ statsd_pulgin }}"
-    - name: rate-limiting
-      config.policy: local
-      config.hour: "{{ medium_rate_limit_per_hour }}"
-      config.limit_by: ip
-    - name: request-size-limiting
-      config.allowed_payload_size: "{{ small_request_size_limit }}"
-
   - name: submitContentForReview
     request_path: "{{ content_prefix }}/v1/review"
     upstream_url: "{{ knowledge_mw_service_url }}/v1/content/review"
