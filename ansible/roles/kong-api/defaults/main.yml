@@ -3309,7 +3309,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ KongConsumerApi_ACL | default(['kongConsumer']) }}"
+      config.whitelist: "['kongConsumer']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ small_rate_limit_per_hour }}"
