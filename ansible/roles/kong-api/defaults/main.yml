@@ -76,8 +76,6 @@ content_service_url: "http://content-service:9000"
 
 premium_consumer_rate_limits:
   - api: createContent
-    config.hour: "{{ premium_consumer_small_rate_limit_per_hour }}"
-    config.limit_by: credential
     strip_request_path: true
     plugins:
     - name: jwt
