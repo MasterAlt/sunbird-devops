@@ -4031,3 +4031,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# updatePageSection API DESCRIPTION: Update API page section in the UI like resources, helpul for search purpose
+  - name: updatePageSection
+    request_path: "{{ data_service_prefix }}/v1/page/section/update"
+    upstream_url: "{{ lms_service_url }}/v1/page/section/update"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['pageUpdate']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
