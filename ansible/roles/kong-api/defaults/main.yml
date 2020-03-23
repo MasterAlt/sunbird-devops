@@ -1,7 +1,5 @@
 
 ---
-kong_admin_api_url: "http://{{kong_host}}:8001"
-
     strip_request_path: true
     plugins:
     - name: jwt
