@@ -80,8 +80,6 @@ premium_consumer_rate_limits:
     config.limit_by: credential
     config.policy: local
   - api: updateContent
-    config.hour: "{{ premium_consumer_medium_rate_limit_per_hour }}"
-    config.limit_by: credential
     strip_request_path: true
     plugins:
     - name: jwt
