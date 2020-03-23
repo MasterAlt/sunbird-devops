@@ -3617,3 +3617,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# telemetryErrorLogging API DESCRIPTION: used for mobile crashed logs
+  - name: telemetryErrorLogging
+    request_path: "{{ data_service_prefix }}/v1/client/logs"
+    upstream_url: "http://11.2.4.21:9000/data/v1/client/logs"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist: "['telemetryCreate ']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
