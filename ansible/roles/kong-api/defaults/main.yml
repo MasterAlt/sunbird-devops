@@ -44,8 +44,6 @@ composite_service_prefix: /composite
 api_manager_perfix: /api-manager
 meta_service_prefix: /meta
 dashboard_service_prefix: /dashboard
-announcement_service_prefix: /announcement
-dialcode_service_prefix: /dialcode
     strip_request_path: true
     plugins:
     - name: jwt
