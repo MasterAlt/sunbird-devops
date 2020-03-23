@@ -30,8 +30,6 @@ small_request_size_limit: 1
 medium_request_size_limit: 10
 large_request_size_limit: 100
 
-# Default service prefixes
-private_content_prefix: /private/content
     strip_request_path: true
     plugins:
     - name: jwt
