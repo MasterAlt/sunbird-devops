@@ -66,8 +66,6 @@ learning_service_url: "http://learner-service:9000"
 vm_learning_service_url: "http://{{learningservice_ip}}:8080/learning-service"
 telemetry_service_url: "http://telemetry-service:9001"
 player_service_url: "http://player:3000"
-echo_service_url: "http://echo:9595"
-am_util_url: "http://adminutil:4000"
     strip_request_path: true
     plugins:
     - name: jwt
