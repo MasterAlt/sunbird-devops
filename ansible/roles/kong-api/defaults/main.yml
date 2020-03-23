@@ -2483,3 +2483,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# privateUserUpdate API DESCRIPTION: used to update user profile but validating who is updating user data by default user can update his own profile
+  - name: privateUserUpdate
+    request_path: "{{ user_service_prefix }}/private/v1/update"
+    upstream_url: "{{ learning_service_url }}/private/user/v1/update"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['userSuperAdmin']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
