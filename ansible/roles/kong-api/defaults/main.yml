@@ -2285,3 +2285,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# mergeUserAccounts API DESCRIPTION: used to merge the user account
+  - name: mergeUserAccounts
+    request_path: "{{ user_service_prefix }}/v1/account/merge"
+    upstream_url: "{{ learning_service_url }}/private/user/v1/account/merge"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['userUpdate']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
