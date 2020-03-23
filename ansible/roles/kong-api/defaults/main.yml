@@ -3266,7 +3266,7 @@ kong_apis:
      - {name: 'jwt'}
      - {name: 'cors'}
      - "{{ statsd_pulgin }}"
-     - {name: 'acl',config.whitelist: "{{ addSystemSettings_ACL | default(['dataAdmin'])}}"}
+     - {name: 'acl',config.whitelist: "['dataAdmin']"}
      - {name: 'rate-limiting', config.policy: "local", config.hour: "{{  medium_rate_limit_per_hour }}"}
      - {name: 'request-size-limiting', config.allowed_payload_size: "{{ small_request_size_limit }}" }
 
