@@ -1646,7 +1646,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ getContentUploadUrl_ACL | default(['contentUpdate']) }}"
+      config.whitelist: "['contentUpdate']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
