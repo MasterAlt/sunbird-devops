@@ -20,8 +20,6 @@ x_medium_rate_limit_per_hour: 5000
 large_rate_limit_per_hour: 10000
 x2_large_rate_limit_per_hour: 15000
 x_large_rate_limit_per_hour: 30000
-
-premium_consumer_small_rate_limit_per_hour: 1000
     strip_request_path: true
     plugins:
     - name: jwt
