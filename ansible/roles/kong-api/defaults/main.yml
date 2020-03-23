@@ -1115,3 +1115,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# deviceRegister API DESCRIPTION: used to add the location information with the device registration
+  - name: deviceRegister
+    request_path: "/v3/device/register"
+    upstream_url: "http://11.2.4.21:9000/v1/device/register"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist: "['deviceCreate']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
