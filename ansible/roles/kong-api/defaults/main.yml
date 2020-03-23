@@ -1187,3 +1187,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# downloadTOC API DESCRIPTION: used to download table of content for the text book
+  - name: downloadTOC
+    request_path: "{{ textbook_service_prefix }}/v1/toc/download"
+    upstream_url: "{{ lms_service_url }}/v1/textbook/toc/download"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['contentAccess']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_large_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
