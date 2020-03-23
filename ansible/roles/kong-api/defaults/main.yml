@@ -88,8 +88,6 @@ premium_consumer_rate_limits:
     config.limit_by: credential
     config.policy: local
 
-    request_path: "{{ cert_registry_service_prefix }}/v1/certs/read"
-    upstream_url: "{{ cert_registry_service_url }}/certs/v1/registry/read"
     strip_request_path: true
     plugins:
     - name: jwt
