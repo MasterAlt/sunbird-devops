@@ -89,23 +89,6 @@ premium_consumer_rate_limits:
     config.policy: local
 
 kong_apis:
-  - name: getUploadJobStatusLink
-    request_path: "{{ data_service_prefix }}/v1/upload/statusDownloadLink"
-    upstream_url: "{{ learning_service_url }}/v1/upload/statusDownloadLink"
-    strip_request_path: true
-    plugins:
-    - name: jwt
-    - name: cors
-    - "{{ statsd_pulgin }}"
-    - name: acl
-      config.whitelist: "['appAdmin']"
-    - name: rate-limiting
-      config.policy: local
-      config.hour: "{{ medium_rate_limit_per_hour }}"
-      config.limit_by: credential
-    - name: request-size-limiting
-      config.allowed_payload_size: "{{ small_request_size_limit }}"
-
   - name: createBatch
     request_path: "{{ course_service_prefix }}/v1/batch/create"
     upstream_url: "{{ lms_service_url }}/v1/course/batch/create"
