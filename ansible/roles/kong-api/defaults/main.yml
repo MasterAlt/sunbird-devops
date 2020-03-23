@@ -38,8 +38,6 @@ itemset_prefix: /itemset
 user_service_prefix: /user
 data_service_prefix: /data
 notes_service_prefix: /notes
-org_service_prefix: /org
-echo_service_prefix: /echo
     strip_request_path: true
     plugins:
     - name: jwt
