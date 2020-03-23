@@ -14,8 +14,6 @@ statsd_pulgin:
   config.port: "{{ statsd_port }}"
 
 # Default Rate limits
-small_rate_limit_per_hour: 100
-medium_rate_limit_per_hour: 5000
     strip_request_path: true
     plugins:
     - name: jwt
