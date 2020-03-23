@@ -1925,3 +1925,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ medium_request_size_limit }}"
+
+# LicenseAPI API DESCRIPTION: CRUD operation on license object for neo4j and redis
+  - name: LicenseAPI
+    request_path: "{{ license_api_prefix }}/v3"
+    upstream_url: "{{ content_service_url }}/license/v3"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist: "['appAdmin']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ medium_request_size_limit }}"
