@@ -413,3 +413,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# copyContent API DESCRIPTION: makes a copy of a content along with artefacts
+  - name: copyContent
+    request_path: "{{ content_prefix }}/v1/copy"
+    upstream_url: "{{ knowledge_mw_service_url }}/v1/content/copy"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist: "['contentCreate']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
