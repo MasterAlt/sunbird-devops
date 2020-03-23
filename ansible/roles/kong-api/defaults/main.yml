@@ -4157,3 +4157,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# uploadMedia API DESCRIPTION: used to upload files from local
+  - name: uploadMedia
+    request_path: "{{ content_prefix }}/v1/media/upload"
+    upstream_url: "{{ learning_service_url }}/v1/file/upload"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['contentUpdate']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ large_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
