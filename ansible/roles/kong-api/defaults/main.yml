@@ -1391,7 +1391,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ createBatch_ACL | default(['courseUpdate']) }}"
+      config.whitelist: "['courseUpdate']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
