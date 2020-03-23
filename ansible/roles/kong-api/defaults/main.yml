@@ -3281,7 +3281,7 @@ kong_apis:
      - {name: 'rate-limiting', config.policy: "local", config.hour: "{{  medium_rate_limit_per_hour }}"}
      - {name: 'request-size-limiting', config.allowed_payload_size: "{{ small_request_size_limit }}" }
      - name: acl
-       config.whitelist: "{{ getSystemSettings_ACL | default(['publicUser','mobileApis']) }}"
+       config.whitelist: "['publicUser',"
 
   - name: onboardConsumer
     request_path: "{{ api_manager_perfix }}/v1/consumer/create/jwt"
