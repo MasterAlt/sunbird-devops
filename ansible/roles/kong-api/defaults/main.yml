@@ -1637,3 +1637,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# getMediaTypes API DESCRIPTION: used to display the social media accounts with the user
+  - name: getMediaTypes
+    request_path: "{{ user_service_prefix }}/v1/mediatype/list"
+    upstream_url: "{{ learning_service_url }}/v1/user/mediatype/list"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{{ statsd_pulgin }}"
+    - name: acl
+      config.whitelist: "['userAccess']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
