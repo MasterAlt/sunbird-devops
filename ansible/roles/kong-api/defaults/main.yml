@@ -1,5 +1,3 @@
-
----
     strip_request_path: true
     plugins:
     - name: jwt
