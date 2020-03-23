@@ -3735,7 +3735,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ UserBulkUploadv2_ACL | default(['userAdmin']) }}"
+      config.whitelist: "['userAdmin']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ small_rate_limit_per_hour }}"
