@@ -1527,7 +1527,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ blockUser_ACL | default(['userAdmin']) }}"
+      config.whitelist: "['userAdmin']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
