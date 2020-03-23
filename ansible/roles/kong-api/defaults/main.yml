@@ -3394,7 +3394,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ verifyOtp_ACL | default(['publicUser','mobileApis']) }}"
+      config.whitelist: "['publicUser',"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
