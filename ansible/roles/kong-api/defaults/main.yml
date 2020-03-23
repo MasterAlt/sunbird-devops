@@ -2,8 +2,6 @@
 ---
 kong_admin_api_url: "http://{{kong_host}}:8001"
 
-# Default statsd_metrics
-statsd_metrics: ["request_count", "status_count", "latency", "upstream_latency", "request_size", "response_size"]
     strip_request_path: true
     plugins:
     - name: jwt
