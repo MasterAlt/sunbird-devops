@@ -1187,7 +1187,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ telemetry_ACL | default(['publicUser','mobileApis']) }}"
+      config.whitelist: "['publicUser',"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ premium_consumer_large_rate_limit_per_hour }}"
