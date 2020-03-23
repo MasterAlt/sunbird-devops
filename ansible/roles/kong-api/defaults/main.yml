@@ -1043,3 +1043,21 @@ kong_apis:
       config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+# deleteIssuer API DESCRIPTION: used to delete the issuers
+  - name: deleteIssuer
+    request_path: "{{ badge_service_prefix }}/v1/issuer/delete"
+    upstream_url: "{{ learning_service_url }}/v1/issuer/delete"
+    strip_request_path: true
+    plugins:
+    - name: jwt
+    - name: cors
+    - "{ statsd_pulgin }"
+    - name: acl
+      config.whitelist: "['badgeAdmin']"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ x_medium_rate_limit_per_hour }}"
+      config.limit_by: credential
+    - name: request-size-limiting
+      config.allowed_payload_size: "{{ small_request_size_limit }}"
