@@ -930,7 +930,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ listPageSections_ACL | default(['appUpdate']) }}"
+      config.whitelist: "['appUpdate']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
