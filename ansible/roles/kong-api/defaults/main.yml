@@ -797,7 +797,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ updateOrg_ACL | default(['orgUpdate']) }}"
+      config.whitelist: "['orgUpdate']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
