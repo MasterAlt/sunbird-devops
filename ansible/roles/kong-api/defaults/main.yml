@@ -2473,7 +2473,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ listFramework_ACL | default(['domainUser']) }}"
+      config.whitelist: "['domainUser']"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ x_medium_rate_limit_per_hour }}"
