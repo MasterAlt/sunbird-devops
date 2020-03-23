@@ -2190,7 +2190,7 @@ kong_apis:
     - name: cors
     - "{{ statsd_pulgin }}"
     - name: acl
-      config.whitelist: "{{ readDialcode_ACL | default(['dialcodeUser','mobileApis']) }}"
+      config.whitelist: "['dialcodeUser',"
     - name: rate-limiting
       config.policy: local
       config.hour: "{{ medium_rate_limit_per_hour }}"
