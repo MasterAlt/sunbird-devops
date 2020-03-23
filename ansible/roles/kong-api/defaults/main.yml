@@ -3487,7 +3487,7 @@ kong_apis:
      - {name: 'jwt'}
      - {name: 'cors'}
      - "{{ statsd_pulgin }}"
-     - {name: 'acl',config.whitelist: "{{ privateUserUpdate_ACL | default(['publicUser'])}}"}
+     - {name: 'acl',config.whitelist: "['publicUser']"}
      - {name: 'rate-limiting', config.policy: "local", config.hour: "{{ medium_rate_limit_per_hour  }}"}
      - {name: 'request-size-limiting', config.allowed_payload_size: "{{ small_request_size_limit }}" }
 
