@@ -52,8 +52,6 @@ badge_service_prefix: /badging
 plugin_service_prefix: /plugins
 config_service_prefix: /config
 textbook_service_prefix: /textbook
-lock_service_prefix: /lock
-otp_service_prefix: /otp
     strip_request_path: true
     plugins:
     - name: jwt
