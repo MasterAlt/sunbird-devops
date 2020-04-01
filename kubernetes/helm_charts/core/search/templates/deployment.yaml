@@ -24,14 +24,17 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imagepullsecrets }}
 {{- end }}
+      volumes:
+        - name: {{ .Chart.Name }}-config
+          configMap:
+            name: {{ .Chart.Name }}-config
+        - name: {{ .Chart.Name }}-xml-config
+          configMap:
+            name: {{ .Chart.Name }}-xml-config
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.dockerhub }}/{{ .Values.repository }}:{{ .Values.image_tag }}"
-        env:
-        - name: KONG_DNS_RESOLVER
-          value: "127.0.0.1:53"
-        - name: KONG_DNSMASQ
-          value: "off"
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: {{ .Chart.Name }}-config
@@ -39,28 +42,25 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
         - containerPort: {{ .Values.network.port }}
-          name: network
-        - containerPort: {{ .Values.service.port }}
-          name: service
         {{- if .Values.healthcheck }}
         livenessProbe:
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
         {{- end }}
-      - name: go-dns
-        image: "{{ .Values.godns.repository }}:{{ .Values.godns.image_tag }}"
-        env:
-        - name: DNSMASQ_ENABLE_SEARCH
-          value: "True"
-        resources:
-{{ toYaml .Values.godns.resources | indent 10 }}
-
+        volumeMounts:
+          - name: {{ .Chart.Name }}-config
+            mountPath: /home/sunbird/search-service-1.0-SNAPSHOT/config/application.conf
+            subPath: search-service_application.conf
+          - name: {{ .Chart.Name }}-xml-config
+            mountPath: /home/sunbird/search-service-1.0-SNAPSHOT/config/logback.xml
+            subPath: search-service_logback.xml
+          
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: kong
+  name: {{ .Chart.Name }}-service
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ .Chart.Name }}
@@ -68,11 +68,6 @@ spec:
   ports:
   - name: http-{{ .Chart.Name }}
     protocol: TCP
-    port: {{ .Values.network.port }}
-    targetPort: {{ .Values.network.targetport }}
-  - name: http-admin-{{ .Chart.Name }}
-    protocol: TCP
-    port: {{ .Values.service.port }}
-    targetPort: {{ .Values.service.targetport }}
+    port: {{ .Values.network.targetport }}
   selector:
-    app: {{ .Chart.Name }} # metadataname of deployment
+    app: {{ .Chart.Name }}
